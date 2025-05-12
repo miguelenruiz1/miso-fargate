@@ -19,23 +19,52 @@ phases:
       - echo "Ejecutando pruebas unitarias con pytest..."
       - pytest tests/
       - echo "Logging in to Amazon ECR..."
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 988732899429.dkr.ecr.us-east-1.amazonaws.com
+      - aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com
+
   build:
     commands:
       - echo "build started on `date`"
       - echo "Building the Docker image..."
-      - docker build -t miso_fargate .
-      - docker tag miso_fargate:latest 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest
+      - docker build -t $IMAGE_REPO_NAME .
+      - docker tag $IMAGE_REPO_NAME:latest $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$IMAGE_REPO_NAME:latest
 
   post_build:
     commands:
       - echo "Build completed on `date`"
       - echo "Pushing the Docker image..."
-      - docker push 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest
+      - docker push $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$IMAGE_REPO_NAME:latest
       - echo "writing image definitions file..."
-      - printf '[{"name":"miso_fargate","imageUri":"%s"}]' 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest > imagedefinitions.json
-      - printf '{"imageURI":"%s"}' 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest > imagedefinitions.json
-      - cat imagedefinitions.json
+      - printf '[{"name":"miso_fargate","imageUri":"%s"}]' $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$IMAGE_REPO_NAME:latest > imagedefinitions.json
+
+      - echo "writing task definition file..."
+      - |
+        cat <<EOF > taskdef.json
+        {
+          "executionRoleArn": "arn:aws:iam::$ACCOUNT_ID:role/ecsTaskExecutionRole",
+          "containerDefinitions": [
+            {
+              "portMappings": [
+                {
+                  "hostPort": 5000,
+                  "protocol": "tcp",
+                  "containerPort": 5000
+                }
+              ],
+              "image": "$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$IMAGE_REPO_NAME:latest",
+              "essential": true,
+              "name": "Container-app-python"
+            }
+          ],
+          "requiresCompatibilities": ["FARGATE"],
+          "networkMode": "awsvpc",
+          "cpu": "256",
+          "memory": "512",
+          "family": "task-app-python"
+        }
+        EOF
+
+      - cat taskdef.json
+
 artifacts:
   files:
     - '**/*'
