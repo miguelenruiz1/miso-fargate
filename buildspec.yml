@@ -6,6 +6,7 @@ env:
     REGION:          "us-east-1"
     IMAGE_REPO_NAME: "miso_fargate"
 
+    
 phases:
   install:
     runtime-versions:
