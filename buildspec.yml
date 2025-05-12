@@ -1,5 +1,11 @@
 version: 0.2
 
+env:
+  variables:
+    ACCOUNT_ID:      "988732899429"
+    REGION:          "us-east-1"
+    IMAGE_REPO_NAME: "miso_fargate"
+
 phases:
   install:
     runtime-versions:
