@@ -8,7 +8,7 @@
   "containerDefinitions": [
     {
       "name": "miso_fargate",
-      "image": "IMAGE1_NAME",
+      "image": "988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest",
       "essential": true,
       "portMappings": [
         {
