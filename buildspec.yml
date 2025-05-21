@@ -2,33 +2,50 @@ version: 0.2
 
 env:
   variables:
-    ECR_REGISTRY: 988732899429.dkr.ecr.us-east-1.amazonaws.com
-    ECR_REPOSITORY: miso_fargate
-    IMAGE_TAG: latest
+    AWS_DEFAULT_REGION: us-east-1
+    AWS_ACCOUNT_ID: 988732899429   # <-- reemplaza con tu cuenta
+    IMAGE_REPO_NAME: miso_fargate   # <-- reemplaza con tu repositorio
 
 phases:
   pre_build:
     commands:
-      - echo "🔐 Authenticate Docker to Amazon ECR (CLI v1)..."
-      - $(aws ecr get-login --no-include-email --region us-east-1)
+      - echo "🔐 Authenticate Docker to Amazon ECR (CLI v2)…"
+      # Obtiene el password y hace login en ECR
+      - aws ecr get-login-password \
+          --region $AWS_DEFAULT_REGION \
+        | docker login \
+          --username AWS \
+          --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
 
   build:
     commands:
-      - echo "🐳 Building the Docker image..."
-      - docker build -t $ECR_REPOSITORY .
-      - docker tag $ECR_REPOSITORY:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+      - echo "🛠️ Building Docker image…"
+      - docker build -t $IMAGE_REPO_NAME .
+      - echo "🏷️ Tagging image…"
+      - docker tag \
+          $IMAGE_REPO_NAME:latest \
+          $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest
 
   post_build:
     commands:
-      - echo "🚀 Pushing the image to ECR..."
-      - docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-
+      - echo "🚀 Pushing image to ECR…"
+      - docker push \
+          $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest
+      - echo "📝 Writing imagedefinitions.json for CodeDeploy…"
       - printf '[{"name":"%s","imageUri":"%s"}]' \
-          $ECR_REPOSITORY $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+          $IMAGE_REPO_NAME \
+          $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest \
         > imagedefinitions.json
 
 artifacts:
+  # Esto es lo que consume tu etapa de ECS/CodeDeploy
   files:
     - imagedefinitions.json
-    - appspec.json
-    - taskdef.json
+
+  # Si usas CodeDeploy Blue/Green con appspec y taskdef externos,
+  # defínelos como artefactos secundarios:
+  secondary-artifacts:
+    DefinitionArtifact:
+      files:
+        - appspec.json
+        - taskdef.json
