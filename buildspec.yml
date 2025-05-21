@@ -1,44 +1,37 @@
 version: 0.2
 
-env:
-  variables:
-    AWS_DEFAULT_REGION: us-east-1           # ← tu región
-    AWS_ACCOUNT_ID: 988732899429            # ← tu cuenta AWS
-    IMAGE_REPO_NAME: miso_fargate           # ← tu repositorio
-
 phases:
   pre_build:
     commands:
-      - echo "🔐 Authenticate Docker to Amazon ECR (CLI v2)…"
-      # TODO: aquí todo en una sola línea
-      - aws ecr get-login-password --region $AWS_DEFAULT_REGION \
-        | docker login --username AWS \
-          --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
-
+      - echo "Logging in to Amazon ECR..."
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 988732899429.dkr.ecr.us-east-1.amazonaws.com
   build:
     commands:
-      - echo "🛠️ Building Docker image…"
-      - docker build -t $IMAGE_REPO_NAME .
-      - echo "🏷️ Tagging image…"
-      - docker tag $IMAGE_REPO_NAME:latest \
-          $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest
+      - echo "build started on `date`"
+      - echo "Building the Docker image..."
+      - docker build -t miso_fargate .
+      - docker tag miso_fargate:latest 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest
 
   post_build:
     commands:
-      - echo "🚀 Pushing image to ECR…"
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest
-      - echo "📝 Writing imagedefinitions.json…"
-      - printf '[{"name":"%s","imageUri":"%s"}]' \
-          $IMAGE_REPO_NAME \
-          $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest \
-        > imagedefinitions.json
-
+      - echo "Build completed on `date`"
+      - echo "Pushing the Docker image..."
+      - docker push 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest
+      - echo "writing image definitions file..."
+      - printf '[{"name":"miso_fargate","imageUri":"%s"}]' 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest > imagedefinitions.json
+      - printf '{"imageURI":"%s"}' 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest > imagedefinitions.json
+      - cat imagedefinitions.json
 artifacts:
   files:
+    - '**/*'
     - imagedefinitions.json
-
+    - imagedetails.json
   secondary-artifacts:
-    DefinitionArtifact:
+    definitionsartifact:
       files:
         - appspec.json
         - taskdef.json
+      discard-paths: yes
+    imageartifact:
+      files:
+        - imagedetails.json
