@@ -2,7 +2,6 @@ version: 0.2
 
 env:
   variables:
-    # Parámetros de tu ECR
     ECR_REGISTRY: 988732899429.dkr.ecr.us-east-1.amazonaws.com
     ECR_REPOSITORY: miso_fargate
     IMAGE_TAG: latest
@@ -10,9 +9,8 @@ env:
 phases:
   pre_build:
     commands:
-      - echo "🔐 Authenticate Docker to Amazon ECR..."
-      - aws ecr get-login-password --region us-east-1 \
-        | docker login --username AWS --password-stdin $ECR_REGISTRY
+      - echo "🔐 Authenticate Docker to Amazon ECR (CLI v1)..."
+      - $(aws ecr get-login --no-include-email --region us-east-1)
 
   build:
     commands:
@@ -25,19 +23,12 @@ phases:
       - echo "🚀 Pushing the image to ECR..."
       - docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-      # 1) imagedefinitions.json para CodeDeploy/ECS (usado en la etapa de deploy)
       - printf '[{"name":"%s","imageUri":"%s"}]' \
           $ECR_REPOSITORY $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
         > imagedefinitions.json
 
-      # 2) imageDetail.json (si tu pipeline lo requiere, p.ej. para notificaciones)
-      - printf '{"imageUri":"%s"}' \
-          $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
-        > imageDetail.json
-
 artifacts:
   files:
     - imagedefinitions.json
-    - imageDetail.json
     - appspec.json
     - taskdef.json
