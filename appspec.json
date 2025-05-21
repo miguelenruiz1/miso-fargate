@@ -5,7 +5,7 @@
       "TargetService": {
         "Type": "AWS::ECS::Service",
         "Properties": {
-          "TaskDefinition": "miso-fargate:1",
+          "TaskDefinition": "arn:aws:ecs:us-east-1:988732899429:task-definition/Task-app-python:5",
           "LoadBalancerInfo": {
             "ContainerName": "miso_fargate",
             "ContainerPort": 5000
@@ -15,3 +15,6 @@
     }
   ]
 }
+
+
+
