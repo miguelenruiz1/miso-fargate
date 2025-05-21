@@ -24,8 +24,7 @@ phases:
 artifacts:
   files:
     - '**/*'
-    - imagedefinitions.json
-    - imagedetails.json
+    - imagedefinitions.json  
   secondary-artifacts:
     definitionsartifact:
       files:

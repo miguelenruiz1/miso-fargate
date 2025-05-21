@@ -1,13 +1,13 @@
 {
-  "version": 1,
+  "version": 0.0,
   "Resources": [
     {
       "TargetService": {
         "Type": "AWS::ECS::Service",
-        "Properties": {          
-          "TaskDefinition": "TASK_DEFINITION",
+        "Properties": {
+          "TaskDefinition": "Task-app-python",     
           "LoadBalancerInfo": {
-            "ContainerName": "miso_fargate",
+            "ContainerName": "miso_fargate",     
             "ContainerPort": 5000
           }
         }
