@@ -5,10 +5,8 @@
       "TargetService": {
         "Type": "AWS::ECS::Service",
         "Properties": {
-          
-          "TaskDefinition": "taskdef.json",
+          "TaskDefinition": "miso-fargate:1",
           "LoadBalancerInfo": {
-            
             "ContainerName": "miso_fargate",
             "ContainerPort": 5000
           }
