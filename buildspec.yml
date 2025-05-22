@@ -23,13 +23,13 @@ phases:
 artifacts:
   files:
     - '**/*'
-    - imagedefinitions.json  
+    - imagedefinitions.json
+    - imageDetail.json
   secondary-artifacts:
-    definitionsartifact:
+    DefinitionArtifact:
       files:
-        - appspec.json
+        - appspec.yaml
         - taskdef.json
-      discard-paths: yes
-    imageartifact:
+    ImageArtifact:
       files:
-        - imagedetails.json 
+        - imageDetail.json
