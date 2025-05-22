@@ -2,25 +2,23 @@
   "executionRoleArn": "arn:aws:iam::988732899429:role/ecsTaskExecutionRole",
   "containerDefinitions": [
     {
+      "name": "Container-app-python-miso",
+      "image": "IMAGE1_NAME",
+      "essential": true,
       "portMappings": [
         {
           "containerPort": 5000,
-          "protocol": "tcp",
-          "hostPort": 5000
+          "hostPort": 5000,
+          "protocol": "tcp"
         }
-      ],
-
-      "image": "IMAGE1_NAME",
-      "essential": true,
-      "name": "Container-app-python-miso"  
+      ]
     }
   ],
-
   "requiresCompatibilities": [
     "FARGATE"
   ],
   "networkMode": "awsvpc",
   "cpu": "512",
   "memory": "1024",
-  "family": "Task-app-python-miso:4"
+  "family": "Task-app-python-miso"
 }
