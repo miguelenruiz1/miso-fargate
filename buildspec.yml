@@ -20,7 +20,6 @@ phases:
       - echo "Writing image definitions file..."
       - printf '[{"name":"Container-app-python-miso","imageUri":"%s"}]' 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest > imagedefinitions.json
       - cat imagedefinitions.json
-
 artifacts:
   files:
     - '**/*'
