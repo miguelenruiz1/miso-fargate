@@ -33,3 +33,6 @@ artifacts:
     imageartifact:
       files:
         - imagedefinitions.json
+    BuildArtifact:
+        files:
+          - '**/*'
