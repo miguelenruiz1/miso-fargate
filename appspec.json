@@ -7,7 +7,7 @@
         "Properties": {
           "TaskDefinition": "arn:aws:ecs:us-east-1:988732899429:task-definition/Task-app-python:5",
           "LoadBalancerInfo": {
-            "ContainerName": "miso_fargate",
+            "ContainerName": "Container-app-python-miso",
             "ContainerPort": 5000
           }
         }

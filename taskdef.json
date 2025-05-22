@@ -7,7 +7,7 @@
   "memory": "1024",
   "containerDefinitions": [
     {
-      "name": "miso_fargate",
+      "name": "Container-app-python-miso",
       "image": "IMAGE1_NAME",
       "essential": true,
       "portMappings": [
