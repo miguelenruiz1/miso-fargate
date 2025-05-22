@@ -3,6 +3,8 @@ version: 0.2
 phases:
   pre_build:
     commands:
+      - echo "Login to Docker Hub"
+      - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_TOKEN
       - echo "Logging in to Amazon ECR..."
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 988732899429.dkr.ecr.us-east-1.amazonaws.com
 
@@ -19,13 +21,11 @@ phases:
       - echo "Pushing the Docker image..."
       - docker push 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest
       - echo "Writing image definitions file..."
-      - printf '[{"name":"Container-app-python-miso","imageUri":"%s"}]' 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest > imagedefinitions.json
-      - cat imagedefinitions.json
+      - printf '[{"name":"Container-app-python-miso","imageUri":"%s"}]' 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest > imagedefinitions.json      
 
 artifacts:
   files:
-    - '**/*'
-    - imagedefinitions.json
+    - '**/*'    
     - imageDetail.json
   secondary-artifacts:
     DefinitionArtifact:
