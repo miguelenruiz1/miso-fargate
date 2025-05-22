@@ -10,9 +10,9 @@
         }
       ],
 
-      "image": "<IMAGE1_NAME>",
+      "image": "IMAGE1_NAME",
       "essential": true,
-      "name": "Cluster-app-python-miso"  
+      "name": "imagen-app-python-miso"  
     }
   ],
 
