@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM alpine:3.14
 
 RUN apt-get update && apt-get install -y curl && apt-get clean
 
