@@ -36,4 +36,3 @@ artifacts:
     BuildArtifact:
         files:
           - '**/*'
-          
