@@ -32,4 +32,4 @@ artifacts:
       discard-paths: yes
     imageartifact:
       files:
-        - imagedetails.json
+        - imagedetails.json 
