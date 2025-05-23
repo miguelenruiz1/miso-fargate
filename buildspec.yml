@@ -36,4 +36,5 @@ artifacts:
      imageartifact:
        files:
          - imageDetail.json
+         
 
