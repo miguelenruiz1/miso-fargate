@@ -19,18 +19,19 @@ phases:
       - echo "Pushing the Docker image..."
       - docker push 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest
       - echo "Writing image definitions file..."
-      - printf '[{"name":"Container-app-python-miso","imageUri":"%s"}]' 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest > imagedefinitions.json
+      - printf '[{"name":"Container-app-python-miso","imageUri":"%s"}]' 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest >  imageDetail.json
       - cat imagedefinitions.json
 
 artifacts:
+  files:
+    - '**/*'
+    - imagedefinitions.json
+    - imageDetail.json
   secondary-artifacts:
-    imageartifact:
+    DefinitionArtifact:
       files:
         - appspec.yaml
         - taskdef.json
-      discard-paths: yes
-
-    definitionsartifact:
+    ImageArtifact:
       files:
-        - imagedefinitions.json
-      discard-paths: yes
+        - imageDetail.json
