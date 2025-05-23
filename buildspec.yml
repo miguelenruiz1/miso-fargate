@@ -3,14 +3,11 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - echo "Login to Docker Hub"
-      - echo $DOCKER_HUB_TOKEN | docker login -u $DOCKER_HUB_USER --password-stdin
       - echo "Logging in to Amazon ECR..."
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 988732899429.dkr.ecr.us-east-1.amazonaws.com
-
   build:
     commands:
-      - echo "Build started on `date`"
+      - echo "build started on `date`"
       - echo "Building the Docker image..."
       - docker build -t miso_fargate .
       - docker tag miso_fargate:latest 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest
@@ -20,18 +17,19 @@ phases:
       - echo "Build completed on `date`"
       - echo "Pushing the Docker image..."
       - docker push 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest
-      - echo "Writing image definitions file..."
-      - printf '[{"name":"Container-app-python-miso","imageUri":"%s"}]' 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest > imagedefinitions.json      
-
+      - echo "writing image definitions file..."
+      - printf '[{"name":"miso_fargate","imageUri":"%s"}]' 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest > imagedefinitions.json      
+      - cat imagedefinitions.json
 artifacts:
   files:
-    - '**/*'    
-    - imageDetail.json
+    - '**/*'
+    - imagedefinitions.json  
   secondary-artifacts:
-    DefinitionArtifact:
+    definitionsartifact:
       files:
-        - appspec.yaml
+        - appspec.json
         - taskdef.json
-    ImageArtifact:
+      discard-paths: yes
+    imageartifact:
       files:
-        - imageDetail.json
+        - imagedetails.json 
