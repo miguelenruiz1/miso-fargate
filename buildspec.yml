@@ -4,7 +4,7 @@ phases:
   pre_build:
     commands:
       - echo "Login to Docker Hub"
-      - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_TOKEN
+      - echo $DOCKER_HUB_TOKEN | docker login -u $DOCKER_HUB_USER --password-stdin
       - echo "Logging in to Amazon ECR..."
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 988732899429.dkr.ecr.us-east-1.amazonaws.com
 
