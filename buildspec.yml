@@ -10,14 +10,17 @@ phases:
     commands:
       - echo "Build started on `date`"
       - docker build -t miso_fargate .
+      - docker build -t python_app:latest .
       - docker tag miso_fargate:latest 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest
 
   post_build:
     commands:
       - echo "Pushing the Docker image..."
+      - echo Pushing the Docker image...
       - docker push 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest
       - echo "Writing image definitions file..."
       - printf '[{"name":"Container-app-python-miso","imageUri":"988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest"}]' > imagedefinitions.json
+      - printf '{"ImageURI":"988732899429.dkr.ecr.us-east-2.amazonaws.com/python_app:latest"}' > imageDetail.json
       - cat imagedefinitions.json
 
 artifacts:
