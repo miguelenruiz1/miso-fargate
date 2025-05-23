@@ -28,16 +28,14 @@ artifacts:
      - '**/*'
      - imagedefinitions.json
 #     - imageDetail.json
-     - appspec.json
-     - taskdef.json
 
-#   secondary-artifacts:
-#     definitionsartifact:
-#       files:
-#         - appspec.json
-#         - taskdef.json
-#     imageartifact:
-#       files:
-#         - imageDetail.json
+   secondary-artifacts:
+     definitionsartifact:
+       files:
+         - appspec.json
+         - taskdef.json
+     imageartifact:
+       files:
+         - imageDetail.json
          
 
