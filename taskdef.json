@@ -1,4 +1,3 @@
-
 {
     "executionRoleArn": "arn:aws:iam::988732899429:role/ecsTaskExecutionRole",
     "containerDefinitions": [
@@ -11,9 +10,31 @@
           }
         ],
 
-        "image": "<REPLACE_AT_DEPLOY>",
+        "image": "<IMAGE1_NAME>",
         "essential": true,
-        "name": "Container-app-python-miso"
+        "name": "Container-app-python-miso",
+        "environment": [
+                {
+                    "name": "RDS_USERNAME",
+                    "value": "postgres"
+                },
+                {
+                    "name": "RDS_PASSWORD",
+                    "value": "postgres1234"
+                },
+                {
+                    "name": "RDS_HOSTNAME",
+                    "value": "blacklist-db.c6tgkk6a4m81.us-east-1.rds.amazonaws.com"
+                },
+                {
+                    "name": "RDS_PORT",
+                    "value": "5432"
+                },
+                {
+                    "name": "RDS_DB_NAME",
+                    "value": "blacklist_db"
+                }
+        ]
       }
     ],
 
@@ -23,6 +44,5 @@
     "networkMode": "awsvpc",
     "cpu": "512",
     "memory": "1024",
-    "family": "Task-app-python-miso"
-
+    "family": "Task-Container-app-python-miso"
   }

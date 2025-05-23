@@ -3,34 +3,35 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - echo "Logging in to Amazon ECR..."
+      - pipenv install
+      - pipenv run pytest --cov=src --cov-fail-under=70
+      - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 988732899429.dkr.ecr.us-east-1.amazonaws.com
-
   build:
     commands:
-      - echo "Build started on `date`"
+      - echo Build started on `date`
+      - echo Building the Docker image...
       - docker build -t miso_fargate .
       - docker tag miso_fargate:latest 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest
-
   post_build:
     commands:
-      - echo "Pushing the Docker image..."
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
       - docker push 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest
-      - echo "Writing image definitions file..."
-      - printf '[{"name":"Container-app-python-miso","imageUri":"988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest"}]' > imagedefinitions.json
+      - echo Writing Image Definitions file...
+      - printf '[{"name":"Container-app-python-miso","imageUri":"%s"}]' 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest > imagedefinitions.json
       - printf '{"ImageURI":"988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest"}' > imageDetail.json
       - cat imagedefinitions.json
-
 artifacts:
-  files: 
+  files:
     - '**/*'
     - imagedefinitions.json
     - imageDetail.json
   secondary-artifacts:
-    definitionsartifact:
+    DefinitionArtifact:
       files:
         - appspec.json
         - taskdef.json
-    imageartifact:
+    ImageArtifact:
       files:
         - imageDetail.json
