@@ -25,11 +25,11 @@ artifacts:
     - '**/*'
     - imagedefinitions.json  
   secondary-artifacts:
-    definitionsartifact:
+    imageartifact:
       files:
         - appspec.json
         - taskdef.json
       discard-paths: yes
-    imageartifact:
+    definitionsartifact:
       files:
         - imagedefinitions.json 
