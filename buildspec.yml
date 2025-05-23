@@ -26,5 +26,11 @@ artifacts:
   secondary-artifacts:
     imageartifact:
       files:
+        - appspec.yaml
+        - taskdef.json
+      discard-paths: yes
+
+    definitionsartifact:
+      files:
         - imagedefinitions.json
       discard-paths: yes
