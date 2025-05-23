@@ -27,10 +27,10 @@ artifacts:
     - imagedefinitions.json
     - imageDetail.json
   secondary-artifacts:
-    DefinitionArtifact:
+    definitionsartifact:
       files:
         - appspec.json
         - taskdef.json
-    ImageArtifact:
+    imageartifact:
       files:
         - imageDetail.json
