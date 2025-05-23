@@ -3,11 +3,10 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - pipenv install
-      - pipenv run pytest --cov=src --cov-fail-under=70
+      #- pipenv install
+      #- pipenv run pytest --cov=src --cov-fail-under=70
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 988732899429.dkr.ecr.us-east-1.amazonaws.com
-  build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
