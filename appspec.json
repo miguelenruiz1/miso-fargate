@@ -7,7 +7,7 @@
         "Properties": {
           "TaskDefinition": "REPLACE_AT_DEPLOY",
           "LoadBalancerInfo": {
-            "ContainerName": "Container-app-python-miso",
+            "ContainerName": "miso_fargate",
             "ContainerPort": 5000
           }
         }
