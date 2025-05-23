@@ -28,9 +28,3 @@ artifacts:
       files:
         - imagedefinitions.json
       discard-paths: yes
-
-    definitionsartifact:
-      files:
-        - appspec.json
-        - taskdef.json
-      discard-paths: yes
