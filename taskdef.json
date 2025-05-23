@@ -11,7 +11,7 @@
           }
         ],
 
-        "image": "<REPLACE_AT_DEPLOY>",
+        "image": "<IMAGE1_NAME",
         "essential": true,
         "name": "Container-app-python-miso"
       }

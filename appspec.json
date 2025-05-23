@@ -5,7 +5,7 @@
       "TargetService": {
         "Type": "AWS::ECS::Service",
         "Properties": {
-          "TaskDefinition": "REPLACE_AT_DEPLOY",
+          "TaskDefinition": "IMAGE1_NAME",
           "LoadBalancerInfo": {
             "ContainerName": "Container-app-python-miso",
             "ContainerPort": 5000
