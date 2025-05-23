@@ -13,7 +13,7 @@
 
         "image": "<REPLACE_AT_DEPLOY>",
         "essential": true,
-        "name": "miso_fargate"
+        "name": "Cluster-app-python-miso"
       }
     ],
 
