@@ -1,6 +1,6 @@
 [
   {
-    "name": "Container-app-python-miso",
+    "name": "miso_fargate",
     "imageUri": "988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest"
   }
 ]
