@@ -1,41 +1,32 @@
 version: 0.2
 
 phases:
-   pre_build:
-     commands:
-       - echo "Logging in to Amazon ECR..."
-       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 988732899429.dkr.ecr.us-east-1.amazonaws.com
+  pre_build:
+    commands:
+      - echo "Logging in to Amazon ECR..."
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 988732899429.dkr.ecr.us-east-1.amazonaws.com
 
-   build:
-     commands:
-       - echo "Build started on `date`"
-       - docker build -t miso_fargate .
-       - docker build -t python_app:latest .
-       - docker tag miso_fargate:latest 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest
+  build:
+    commands:
+      - echo "Build started on `date`"
+      - docker build -t miso_fargate .
+      - docker tag miso_fargate:latest 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest
 
-   post_build:
-     commands:
-       - echo "Pushing the Docker image..."
-       - echo Pushing the Docker image...
-       - docker push 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest
-       - echo "Writing image definitions file..."
-       - printf '[{"name":"Container-app-python-miso","imageUri":"988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest"}]' > imagedefinitions.json
-       - printf '{"ImageURI":"988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest"}' > imageDetail.json
-       - cat imagedefinitions.json
+  post_build:
+    commands:
+      - echo "Pushing the Docker image..."
+      - docker push 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest
+      - echo "Writing image definitions file..."
+      - printf '[{"name":"miso_fargate","imageUri":"988732899429.dkr.ecr.us-east-1.amazonaws.com/miso_fargate:latest"}]' > imagedefinitions.json
+      - cat imagedefinitions.json
 
 artifacts:
-   files:
-     - '**/*'
-     - imagedefinitions.json
-     - imageDetail.json
+  files:
+    - '**/*'
+    - imagedefinitions.json
 
-   secondary-artifacts:
-     definitionsartifact:
-       files:
-         - appspec.json
-         - taskdef.json
-     imageartifact:
-       files:
-         - imageDetail.json
-         
-
+  secondary-artifacts:
+    definitionsartifact:
+      files:
+        - appspec.json
+        - taskdef.json
