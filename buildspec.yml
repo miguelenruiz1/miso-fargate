@@ -27,7 +27,7 @@ artifacts:
    files:
      - '**/*'
      - imagedefinitions.json
-     - imageDetail.json
+#     - imageDetail.json
      - appspec.json
      - taskdef.json
 
