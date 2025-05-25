@@ -12,7 +12,7 @@ RUN pip show newrelic
 
 COPY . .
 
-COPY newrelic.ini .
+COPY newrelic.ini .  
 
 EXPOSE 5000
 
@@ -20,5 +20,4 @@ ENV FLASK_APP=application.py
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=5000
 ENV NEW_RELIC_CONFIG_FILE=newrelic.ini
-
 CMD ["newrelic-admin", "run-program", "python", "application.py"]
