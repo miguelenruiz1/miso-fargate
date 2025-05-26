@@ -9,16 +9,16 @@ phases:
   build:
     commands:
       - echo "Build started on `date`"
-      - docker build -t miso-deploy-app .
-      - docker tag miso-deploy-app:latest 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso-deploy-app:latest
+      - docker build -t python_app .
+      - docker tag python_app:latest 988732899429.dkr.ecr.us-east-1.amazonaws.com/python_app:latest
 
   post_build:
     commands:
       - echo "Pushing the Docker image..."
-      - docker push 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso-deploy-app:latest
+      - docker push 988732899429.dkr.ecr.us-east-1.amazonaws.com/python_app:latest
       - echo "Writing image definitions file..."
-      - printf '[{"name":"Container-app-python-deploy","imageUri":"988732899429.dkr.ecr.us-east-1.amazonaws.com/miso-deploy-app:latest"}]' > imagedefinitions.json
-      - printf '{"ImageURI":"988732899429.dkr.ecr.us-east-1.amazonaws.com/miso-deploy-app:latest"}' > imageDetail.json
+      - printf '[{"name":"Container-app-python","imageUri":"988732899429.dkr.ecr.us-east-1.amazonaws.com/python_app:latest"}]' > imagedefinitions.json
+      - printf '{"ImageURI":"988732899429.dkr.ecr.us-east-1.amazonaws.com/python_app:latest"}' > imageDetail.json
       - cat imagedefinitions.json
 
 artifacts:
