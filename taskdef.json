@@ -12,7 +12,33 @@
 
         "image": "<IMAGE1_NAME>",
         "essential": true,
-        "name": "Container-app-python"
+        "name": "Container-app-python",
+        "environment": [
+        {
+          "name": "AUTH_TOKEN",
+          "value": "my_static_token"
+        },
+        {
+          "name": "DATABASE_HOST",
+          "value": "blacklist-db.c6tgkk6a4m81.us-east-1.rds.amazonaws.com"
+        },
+        {
+          "name": "DATABASE_PASSWORD",
+          "value": "postgres1234"
+        },
+        {
+          "name": "RDS_PORT",
+          "value": "5432"
+        },
+        {
+          "name": "DATABASE_USER",
+          "value": "postgres"
+        },
+        {
+          "name": "DATABASE_NAME",
+          "value": "blacklist_db"
+        }
+      ],
         
       }
     ],
