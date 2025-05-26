@@ -17,7 +17,7 @@ phases:
       - echo "Pushing the Docker image..."
       - docker push 988732899429.dkr.ecr.us-east-1.amazonaws.com/miso-deploy-app:latest
       - echo "Writing image definitions file..."
-      - printf '[{"name":"Container-app-python-miso","imageUri":"988732899429.dkr.ecr.us-east-1.amazonaws.com/miso-deploy-app:latest"}]' > imagedefinitions.json
+      - printf '[{"name":"Container-app-python-deploy","imageUri":"988732899429.dkr.ecr.us-east-1.amazonaws.com/miso-deploy-app:latest"}]' > imagedefinitions.json
       - printf '{"ImageURI":"988732899429.dkr.ecr.us-east-1.amazonaws.com/miso-deploy-app:latest"}' > imageDetail.json
       - cat imagedefinitions.json
 
