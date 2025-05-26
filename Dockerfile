@@ -19,5 +19,5 @@ COPY . .
 
 EXPOSE 5000
 
-# Arrancamos la app instrumentada con New Relic 
+# Arrancamos la app instrumentada con New Relic
 CMD ["newrelic-admin", "run-program", "python", "application.py"]
