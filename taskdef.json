@@ -12,7 +12,7 @@
 
         "image": "<IMAGE1_NAME>",
         "essential": true,
-        "name": "Container-app-python-miso"
+        "name": "Container-app-python-deploy"
         
       }
     ],
@@ -23,5 +23,5 @@
     "networkMode": "awsvpc",
     "cpu": "512",
     "memory": "1024",
-    "family": "Task-Container-app-python-miso"
+    "family": "Task-app-python-deploy"
   }

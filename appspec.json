@@ -7,7 +7,7 @@
           "Properties": {
             "TaskDefinition": "<TASK_DEFINITION>",
             "LoadBalancerInfo": {
-              "ContainerName": "Container-app-python-miso",
+              "ContainerName": "Container-app-python-deploy",
               "ContainerPort": 5000
             }
           }
