@@ -42,7 +42,7 @@
        "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/Task-app-blacklist",
+          "awslogs-group": "/ecs/Task-app-python",
           "mode": "non-blocking",
           "awslogs-create-group": "true",
           "max-buffer-size": "25m",
