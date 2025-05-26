@@ -9,7 +9,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiamos tu configuración completa de New Relic 
-COPY newrelic.ini .
+
 
 # Indicamos al agente dónde está el config (no necesitarás ENV extra)
 ENV NEW_RELIC_CONFIG_FILE=newrelic.ini
