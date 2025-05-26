@@ -39,9 +39,21 @@
           "value": "blacklist_db"
         }
       ],
+       "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/Task-app-blacklist",
+          "mode": "non-blocking",
+          "awslogs-create-group": "true",
+          "max-buffer-size": "25m",
+          "awslogs-region": "us-east-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
         
       }
     ],
+    
 
     "requiresCompatibilities": [
       "FARGATE"
