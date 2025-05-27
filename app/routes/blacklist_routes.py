@@ -50,7 +50,7 @@ class BlacklistResource(Resource):
 
 class PingResource(Resource):
     def get(self):
-        return {"message": "pong"}, 200
+        return {"message": "Hola JJ"}, 200
 
 class ResetResource(Resource):
     def post(self):
