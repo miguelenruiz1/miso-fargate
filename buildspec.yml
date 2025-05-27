@@ -4,7 +4,7 @@ env:
   variables:
     ACCOUNT_ID:      "988732899429"
     REGION:          "us-east-1"
-    IMAGE_REPO_NAME: "miso_fargate"
+    IMAGE_REPO_NAME: "python_app"
 
     
 phases:
@@ -34,7 +34,7 @@ phases:
       - echo "Pushing the Docker image..."
       - docker push $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$IMAGE_REPO_NAME:latest
       - echo "writing image definitions file..."
-      - printf '[{"name":"miso_fargate","imageUri":"%s"}]' $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$IMAGE_REPO_NAME:latest > imagedefinitions.json
+      - printf '[{"name":"Container-app-python","imageUri":"%s"}]' $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$IMAGE_REPO_NAME:latest > imagedefinitions.json
 
       - echo "writing task definition file..."
       - |
