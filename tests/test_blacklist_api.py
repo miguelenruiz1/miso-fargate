@@ -10,7 +10,7 @@ class TestPingEndpoint:
         response = client.get('/ping')
         assert response.status_code == 200
         data = json.loads(response.data)
-        assert data['message'] == 'pong'
+        assert data['message'] == 'Hola JJ'
 
 
 class TestAuthenticationRequired:
