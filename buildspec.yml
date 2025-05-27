@@ -34,7 +34,7 @@ phases:
       - echo "Pushing the Docker image..."
       - docker push $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$IMAGE_REPO_NAME:latest
       - echo "writing image definitions file..."
-      - printf '[{"name":"miso_fargate","imageUri":"%s"}]' $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$IMAGE_REPO_NAME:latest > imagedefinitions.json
+      - printf '[{"name":"Container-app-python","imageUri":"%s"}]' $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$IMAGE_REPO_NAME:latest > imagedefinitions.json
 
       - echo "writing task definition file..."
       - |
